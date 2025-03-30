@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Phishing URL Detection" />
+    <meta name="author" content="SANJAY SIKDAR" />
+    <title>Phishing URL Detection</title>
+    
+    <link rel="icon" href="https://znas.in/favicon.png" type="image/png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet" />
+    
+    <style>
+      body {
+        font-family: 'Ubuntu', sans-serif;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      .container {
+        max-width: 600px;
+        display: none;
+      }
+      .card {
+        border-radius: 15px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+      }
+      .btn-primary {
+        background: #ff416c;
+        border: none;
+      }
+      .btn-primary:hover {
+        background: #ff4b2b;
+      }
+      
+      /* Preloader */
+      .preloader, .loading-screen {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #1f1c2c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .preloader h1, .loading-screen h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        opacity: 0;
+        animation: fadeIn 2s ease-in-out forwards;
+      }
+      .loading-screen {
+        display: none;
+      }
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="preloader">
+      <h1>🔍 Welcome to Phishing URL Detection</h1>
+    </div>
+    
+    <div class="loading-screen">
+      <h1>🔄 Checking URL...</h1>
+    </div>
+    
+    <div class="container">
+      <div class="text-center mb-4">
+        <h1 class="fw-bold">🔍 Phishing URL Detection</h1>
+      </div>
+      
+      <div class="card text-center">
+        <form method="post" action="/" onsubmit="showLoading()">
+          <div class="mb-3">
+            <label for="url" class="form-label fw-bold">Enter URL:</label>
+            <input type="text" class="form-control" id="url" name="url" required placeholder="Paste URL here..." />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Check Now</button>
+        </form>
+      </div>
+      
+      {% if url %}
+      <div class="card text-center mt-4">
+        {% if data.prediction_label == 1 %}            
+          <h2 class='text-danger fw-bold'>🚨 This URL is Suspicious!</h2>
+          <p class="text-light"><small>{{url}}</small></p>
+          <a href="https://www.cybercrime.gov.in/" target="_blank" class="btn btn-danger mt-3">Report to Cyber Cell</a>
+        {% else %}
+          <h2 class='text-success fw-bold'>✅ This URL Looks Safe!</h2>
+          <p class="text-light"><small>{{url}}</small></p>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    
+    <script>
+      window.onload = function() {
+        setTimeout(function() {
+          document.querySelector(".preloader").style.display = "none";
+          document.querySelector(".container").style.display = "block";
+        }, 2000);
+      };
+      
+      function showLoading() {
+        document.querySelector(".container").style.display = "none";
+        document.querySelector(".loading-screen").style.display = "flex";
+      }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
